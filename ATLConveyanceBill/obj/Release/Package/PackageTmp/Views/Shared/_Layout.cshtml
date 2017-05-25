@@ -1,0 +1,150 @@
+﻿@using ATLConveyanceBill.Controllers
+@using Microsoft.Ajax.Utilities
+@{
+    HttpContext context = System.Web.HttpContext.Current;
+    var notification = Session["Notification"];
+    int loginStatus=0; //= Convert.ToInt32(Session["LoginStatus"]);
+    int eId=0 ;//= Convert.ToInt32(Session["EId"]);
+    int adminId=0;// = Convert.ToInt32(Session["AdminId"]);
+    HttpCookie cookie = context.Request.Cookies["loginCookie"];
+    if (cookie != null)
+    {
+        try
+        {
+            loginStatus = Convert.ToInt32(cookie["loginStatus"]);
+            eId = Convert.ToInt32(cookie["eId"]);
+            if (cookie["adminId"] != null)
+            {
+                adminId = Convert.ToInt32(cookie["adminId"]);
+            }
+        }
+        catch (Exception e)
+        {
+            TempData["message"] = e.Message;
+            //throw;
+        }
+
+    }
+}
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - ATL Conveyance Bill</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Styles.Render("~/Content/images")
+    @Styles.Render("~/Content/jquery-ui.min.css", "~/Content/animate.min.css")
+    <style>
+        .navigator {
+            height: 65px;
+            width: auto;
+            backface-visibility: visible;
+        }
+    </style>
+    <link href="~/Content/dropdown-menu.css" rel="stylesheet" />
+</head>
+
+
+<body>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/icon.css" rel="stylesheet" />
+    <link href="~/Content/jquery-ui.min.css" rel="stylesheet" />
+    <link href="~/Content/Site.css" rel="stylesheet" />
+    @*<link href="~/Content/css/jquery.dataTables.min.css" rel="stylesheet" />*@
+    @*<link href="~/Content/animate.min.css" rel="stylesheet"/>
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">*@
+    <div class="navbar navbar-inverse navbar-fixed-top">
+
+        @*<img src="~/Content/images/Bk2.jpg" />*@
+        <div class="container">
+
+            <div class="navbar-header navigator">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    @*@Html.ActionLink("invoice atl", "Index", "Home", null, new { @class = "image-icon" })*@
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+
+                </button><img src="~/Content/images/ATL_LOGO.ico" />
+
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+
+                    @if (loginStatus == 1)
+                    {
+                        <li>@Html.ActionLink("Profile", "Index", new { Controller = "Login", id = eId })</li>
+                        <li>@Html.ActionLink("Create Bill", "Create", new { Controller = "Conveyance", id = eId })</li>
+                        <li>@Html.ActionLink("View Bill", "ViewBill", new {Controller = "Conveyance", id = eId})</li>
+                        <li>@Html.ActionLink("View Work Log", "ViewWorkLog", new { Controller = "Conveyance", id = eId })</li>
+                        <li>@Html.ActionLink("Project", "Index", new { Controller = "Project", id = eId })</li>
+
+                    }
+                    @*else
+                        {
+                            <li></li>
+                        }*@
+                    @if (loginStatus == 1 && eId == adminId)
+                    {
+                        
+                        <li class="dropdown">
+
+                            <button class="dropbtn" onclick="myFunction('myDropdown0')">House Keeping</button>
+                            <div class="dropdown-content" id="myDropdown0">
+                                <ul class="dropdown-menu-left">@Html.ActionLink("Department", "Index", "Department")</ul>
+                                <ul class="dropdown-menu-left">@Html.ActionLink("Designation", "Index", "Designation")</ul>
+                                
+                            </div>
+                        </li>
+                         <li class="dropdown">
+  
+                            <button class="dropbtn" onclick="myFunction('myDropdown1')">Authenticate</button>
+                            <div class="dropdown-content" id="myDropdown1">
+                                <ul class="dropdown-menu-left">@Html.ActionLink("Check Bill", "CheckSelectedBills", "Conveyance")</ul>
+                                <ul class="dropdown-menu-left">@Html.ActionLink("Approve", "ApproveSelectedBills", "Conveyance")</ul>
+                                <ul class="dropdown-menu-left">@Html.ActionLink("Pay Bill", "PaySelectedBills", "Conveyance")</ul>
+                            </div>
+
+                           </li>
+                        
+                        <li class="dropdown">
+  
+                            <button class="dropbtn" onclick="myFunction('myDropdown2')">Report</button>
+                            <div class="dropdown-content" id="myDropdown2">
+                                <ul class="dropdown-menu-left"> @Html.ActionLink("Conveyance", "Report", "Conveyance")</ul>
+                                <ul class="dropdown-menu-left">@Html.ActionLink("Work Log", "WorkLogReport", "Conveyance")</ul>
+                            </div>
+
+                           </li>
+                    }
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now - My ASP.NET Application</p>
+            @* <iframe style="margin: 200px" src="http://free.timeanddate.com/clock/i5kx5d7o/n73/szw110/szh110/hbw0/hfc000/cf100/hgr0/fav0/fiv0/mqcfff/mql15/mqw4/mqd94/mhcfff/mhs4/mhl15/mhw4/mhd94/mmv0/hhcbbb/hmcddd/hsceee" frameborder="0" width="110" height="110"></iframe>*@
+            <div id="clock"></div>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+    
+
+    <script src="~/Scripts/dropdown-menu.js"></script>
+</body>
+
+</html>

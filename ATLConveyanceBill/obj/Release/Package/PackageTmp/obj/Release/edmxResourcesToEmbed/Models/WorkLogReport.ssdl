@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ATLConveyanceDBModel1.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'ATLConveyanceDB.dbo.ViewWorkLog' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="ViewWorkLog">
+    <Key>
+      <PropertyRef Name="Name" />
+      <PropertyRef Name="EmpId" />
+      <PropertyRef Name="Date" />
+      <PropertyRef Name="Project" />
+      <PropertyRef Name="WorkSystem" />
+      <PropertyRef Name="Type" />
+      <PropertyRef Name="Description" />
+    </Key>
+    <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="EmpId" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Date" Type="date" Nullable="false" />
+    <Property Name="Project" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="WorkSystem" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Type" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Description" Type="varchar" MaxLength="200" Nullable="false" />
+  </EntityType>
+  <EntityContainer Name="ATLConveyanceDBModel1StoreContainer">
+    <EntitySet Name="ViewWorkLog" EntityType="Self.ViewWorkLog" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [ViewWorkLog].[Name] AS [Name], 
+    [ViewWorkLog].[EmpId] AS [EmpId], 
+    [ViewWorkLog].[Date] AS [Date], 
+    [ViewWorkLog].[Project] AS [Project], 
+    [ViewWorkLog].[WorkSystem] AS [WorkSystem], 
+    [ViewWorkLog].[Type] AS [Type], 
+    [ViewWorkLog].[Description] AS [Description]
+    FROM [dbo].[ViewWorkLog] AS [ViewWorkLog]</DefiningQuery>
+    </EntitySet>
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,161 @@
+﻿@using ATLConveyanceBill.Models
+@model ATLConveyanceBill.Models.TotalConveyanceInfo
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+@*<h1 class="alert-danger">@ViewBag.Message</h1>*@
+@if (@ViewBag.Message == "Failed")
+{
+    <h3 class="alert-danger">Sorry! Bill edition has been failed. Check if this bill was checked.</h3>
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>TotalConveyanceInfo</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+
+        <fieldset>
+            <div class="form-group">
+                @Html.LabelFor(model => model.WorkLog.WorkDate, new {@class = "control-label col-md-2"})
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model=>model.WorkLog.WorkDate,"{0:dd-MMM-yyyy}", new {@class = "ui-resizable"})
+                    @Html.ValidationMessageFor(model => model.WorkLog.WorkDate)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.WorkLog.ProjectId, new {@class = "control-label col-md-2"})
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.WorkLog.ProjectId, ViewBag.Projects as SelectList, "Select")
+                    @Html.ValidationMessageFor(model => model.WorkLog.ProjectId)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.WorkLog.WorkSystemId, new {@class = "control-label col-md-2"})
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.WorkLog.WorkSystemId, ViewBag.WorkSystems as SelectList, "Select")
+                    @Html.ValidationMessageFor(model => model.WorkLog.WorkSystemId)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.WorkLog.WorkTypeId, new {@class = "control-label col-md-2"})
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.WorkLog.WorkTypeId, ViewBag.WorkTypes as SelectList, "Select")
+                    @Html.ValidationMessageFor(model => model.WorkLog.WorkTypeId)
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.WorkLog.Description, new {@class = "control-label col-md-2"})
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.WorkLog.Description)
+                    @Html.ValidationMessageFor(model => model.WorkLog.Description)
+                </div>
+            </div>
+        </fieldset>
+        <fieldset>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Conveyance.Date, new {@class = "control-label col-md-2"})
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.Conveyance.Date, "{0:dd-MMM-yyyy}")
+                    @Html.ValidationMessageFor(model => model.Conveyance.Date)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Conveyance.From, new {@class = "control-label col-md-2"})
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Conveyance.From)
+                    @Html.ValidationMessageFor(model => model.Conveyance.From)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Conveyance.To, new {@class = "control-label col-md-2"})
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Conveyance.To)
+                    @Html.ValidationMessageFor(model => model.Conveyance.To)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Conveyance.VehicleBy, new {@class = "control-label col-md-2"})
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Conveyance.VehicleBy)
+                    @Html.ValidationMessageFor(model => model.Conveyance.VehicleBy)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Conveyance.Amount, new {@class = "control-label col-md-2"})
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Conveyance.Amount)
+                    @Html.ValidationMessageFor(model => model.Conveyance.Amount)
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Conveyance.Remarks, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Conveyance.Remarks)
+                    @Html.ValidationMessageFor(model => model.Conveyance.Remarks)
+                </div>
+            </div>
+        </fieldset>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    <link href="~/Content/bootstrap-datepicker.min.css" rel="stylesheet" />
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+<script src="~/Scripts/bootstrap-datepicker.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("#Conveyance_Date").prop({ 'disabled': true });
+            $('#WorkLog_WorkDate').datepicker({
+                format: "dd-MM-yyyy",
+                autoclose: true,
+                todayHighlight: true,
+                endDate: "Today",
+                maxViewMode: 1,
+                orientation: "bottom right"
+            });
+        })
+    </script>
+<script>
+    $(document).ready(function () {
+        $("#Conveyance_Date").val($("#WorkLog_WorkDate").val());
+        $("#WorkLog_WorkDate").change(function () {
+            var date = $("#WorkLog_WorkDate").val();
+
+            $("#Conveyance_Date").val(date);
+            
+            $("#Conveyance_Date").prop({
+                'disabled': true
+            });
+        });
+        $("#WorkLog_ProjectId").change(function () {
+            var project = $("#WorkLog_ProjectId").val();
+            $("#WorkLog_ProjectId").val(project);
+        });
+    })
+</script>
+
+
+}

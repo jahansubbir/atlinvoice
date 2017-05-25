@@ -1,0 +1,90 @@
+﻿@using ATLConveyanceBill.Controllers
+@using ATLConveyanceBill.Models
+@model IEnumerable<ATLConveyanceBill.Models.Employee>
+
+@{
+    ViewBag.Title = "Index";
+     int loginStatus = Convert.ToInt32(Session["LoginStatus"]);
+    int eId = Convert.ToInt32(Session["EId"]);
+    int adminId = Convert.ToInt32(Session["AdminId"]);
+}
+
+<br />
+<br />
+<br />
+<br />
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.EmpId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Address)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ContactNo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.DepartmentId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DesignationId)
+        </th>
+
+
+
+        <th></th>
+    </tr>
+    <tr>
+        @foreach (Employee employee in ViewBag.Employees)
+        {
+        <tr>
+            <td>@employee.EmpId</td>
+            <td>@employee.Name</td>
+            <td>@employee.Address</td>
+            <td>@employee.ContactNo</td>
+            <td>@employee.Email</td>
+            <td>
+                @foreach (Department department in ViewBag.Departments)
+                {
+                    if (department.Id == employee.DepartmentId)
+                    {
+                        @department.Name
+                    }
+                }
+        </td>
+        <td>
+            @foreach (Designation designation in ViewBag.Designations)
+            {
+                if (designation.Id == employee.DesignationId)
+                {
+                    @designation.Name
+                    }
+                }
+    </td>
+    <td>
+        @Html.ActionLink("Edit", "Edit",new{Controller="Conveyance", id=eId})|@*@if (employee.Id == eId)
+        {
+            @Html.ActionLink("Create Bill", "Create", "Conveyance")
+        }|@Html.ActionLink("View Bill", "Index", new { Controller = "Conveyance", id = employee.Id })*@
+    </td>
+</tr>
+        }
+
+        
+
+
+
+    </table>

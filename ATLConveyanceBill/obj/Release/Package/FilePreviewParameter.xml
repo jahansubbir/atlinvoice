@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="IIS Web Application Name" description="" value="Default Web Site/atlinvoice" tags="IisApp">
+    <parameterEntry kind="ProviderPath" scope="IisApp" match="^F:\\CLIENT\ SOFT\\ATLConveyanceBillUpdatedon16april\\ATLConveyanceBill\\ATLConveyanceBill\\obj\\Release\\Package\\PackageTmp$" />
+    <parameterEntry kind="ProviderPath" scope="setAcl" match="^F:\\CLIENT\ SOFT\\ATLConveyanceBillUpdatedon16april\\ATLConveyanceBill\\ATLConveyanceBill\\obj\\Release\\Package\\PackageTmp$" />
+  </parameter>
+  <parameter name="ApplicationServices-Web.config Connection String" description="" value="data source=ripon-pc;Integrated Security=SSPI;AttachDBFilename=|DataDirectory|\aspnetdb.mdf;User Instance=true" tags="">
+    <parameterEntry kind="XmlFile" scope="F:\\CLIENT\ SOFT\\ATLConveyanceBillUpdatedon16april\\ATLConveyanceBill\\ATLConveyanceBill\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='ApplicationServices']/@connectionString" />
+  </parameter>
+  <parameter name="ATL-Web.config Connection String" description="" value="Data Source=ripon-pc;Initial Catalog=ATLConveyanceDB;Persist Security Info=True;User ID=sa;Password=atl@sql" tags="">
+    <parameterEntry kind="XmlFile" scope="F:\\CLIENT\ SOFT\\ATLConveyanceBillUpdatedon16april\\ATLConveyanceBill\\ATLConveyanceBill\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='ATL']/@connectionString" />
+  </parameter>
+  <parameter name="ATLConveyanceBill.Models.Entities-Web.config Connection String" description="" value="ATLConveyanceBill.Models.Entities_ConnectionString" tags="">
+    <parameterEntry kind="XmlFile" scope="F:\\CLIENT\ SOFT\\ATLConveyanceBillUpdatedon16april\\ATLConveyanceBill\\ATLConveyanceBill\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='ATLConveyanceBill.Models.Entities']/@connectionString" />
+  </parameter>
+  <parameter name="ATLConveyanceDBEntities-Web.config Connection String" description="" value="metadata=res://*/Models.Model1.csdl|res://*/Models.Model1.ssdl|res://*/Models.Model1.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=ripon-pc;initial catalog=ATLConveyanceDB;persist security info=True;user id=sa;MultipleActiveResultSets=True;App=EntityFramework&quot;" tags="">
+    <parameterEntry kind="XmlFile" scope="F:\\CLIENT\ SOFT\\ATLConveyanceBillUpdatedon16april\\ATLConveyanceBill\\ATLConveyanceBill\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='ATLConveyanceDBEntities']/@connectionString" />
+  </parameter>
+  <parameter name="ConveyanceDBEntities-Web.config Connection String" description="" value="metadata=res://*/Models.Model1.csdl|res://*/Models.Model1.ssdl|res://*/Models.Model1.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=DESKTOP-1TH4N6D\SQLEXPRESS;initial catalog=ConveyanceDB;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework&quot;" tags="">
+    <parameterEntry kind="XmlFile" scope="F:\\CLIENT\ SOFT\\ATLConveyanceBillUpdatedon16april\\ATLConveyanceBill\\ATLConveyanceBill\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='ConveyanceDBEntities']/@connectionString" />
+  </parameter>
+  <parameter name="ConveyanceDBEntities1-Web.config Connection String" description="" value="metadata=res://*/Models.ConveyanceDataModel.csdl|res://*/Models.ConveyanceDataModel.ssdl|res://*/Models.ConveyanceDataModel.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=DESKTOP-1TH4N6D\SQLEXPRESS;initial catalog=ConveyanceDB;integrated security=True;multipleactiveresultsets=True;application name=EntityFramework&quot;" tags="">
+    <parameterEntry kind="XmlFile" scope="F:\\CLIENT\ SOFT\\ATLConveyanceBillUpdatedon16april\\ATLConveyanceBill\\ATLConveyanceBill\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='ConveyanceDBEntities1']/@connectionString" />
+  </parameter>
+  <parameter name="ConveyanceDBEntities2-Web.config Connection String" description="" value="metadata=res://*/Models.ConveyanceModel.csdl|res://*/Models.ConveyanceModel.ssdl|res://*/Models.ConveyanceModel.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=.\SQLEXPRESS;initial catalog=ConveyanceDB;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework&quot;" tags="">
+    <parameterEntry kind="XmlFile" scope="F:\\CLIENT\ SOFT\\ATLConveyanceBillUpdatedon16april\\ATLConveyanceBill\\ATLConveyanceBill\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='ConveyanceDBEntities2']/@connectionString" />
+  </parameter>
+  <parameter name="DefaultConnection-Web.config Connection String" description="" value="DefaultConnection_ConnectionString" tags="">
+    <parameterEntry kind="XmlFile" scope="F:\\CLIENT\ SOFT\\ATLConveyanceBillUpdatedon16april\\ATLConveyanceBill\\ATLConveyanceBill\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='DefaultConnection']/@connectionString" />
+  </parameter>
+  <parameter name="ATLConveyanceDBEntities1-Web.config Connection String" description="ATLConveyanceDBEntities1 Connection String used in web.config by the application to access the database." value="metadata=res://*/Models.Model2.csdl|res://*/Models.Model2.ssdl|res://*/Models.Model2.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=RIPON-PC;initial catalog=ATLConveyanceDB;persist security info=True;user id=sa;password=atl@sql;MultipleActiveResultSets=True;App=EntityFramework&quot;" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="F:\\CLIENT\ SOFT\\ATLConveyanceBillUpdatedon16april\\ATLConveyanceBill\\ATLConveyanceBill\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='ATLConveyanceDBEntities1']/@connectionString" />
+  </parameter>
+</parameters>

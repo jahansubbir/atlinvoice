@@ -1,0 +1,145 @@
+﻿@using ATLConveyanceBill.Models
+@model ATLConveyanceBill.Models.WorkLog
+
+@{
+    ViewBag.Title = "WorkLogReport";
+}
+
+<h2>Work Log Report</h2>
+
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { @id="Form"}))
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4></h4>
+        <hr />
+        @Html.ValidationSummary(true)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.EmployeeId, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("EmployeeId", ViewBag.Employees as SelectList, "Select")
+                @Html.ValidationMessageFor(model => model.EmployeeId)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("From", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.Editor("From")
+                @Html.ValidationMessage("From")
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("To", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.Editor("To")
+                @Html.ValidationMessage("To")
+            </div>
+        </div>
+
+        @*<div class="form-group">
+            @Html.LabelFor(model => model.ProjectId, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ProjectId)
+                @Html.ValidationMessageFor(model => model.ProjectId)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.WorkSystemId, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.WorkSystemId)
+                @Html.ValidationMessageFor(model => model.WorkSystemId)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.WorkTypeId, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.WorkTypeId)
+                @Html.ValidationMessageFor(model => model.WorkTypeId)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Description, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Description)
+                @Html.ValidationMessageFor(model => model.Description)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.WorkLogNo, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.WorkLogNo)
+                @Html.ValidationMessageFor(model => model.WorkLogNo)
+            </div>
+        </div>*@
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>@if (ViewBag.WorkLogs != null)
+     {
+         <table class="table table-responsive table-striped">
+             @foreach (WorkLogViewModel view in ViewBag.WorkLogs)
+             {
+                 <tr>
+                     <td>@view.Date.ToString("d")</td>
+                     <td>@view.EmpId</td>
+                     <td>@view.Name</td>
+                     <td>@view.Project</td>
+                     <td>@view.WorkSystem</td>
+                     <td>@view.WorkType</td>
+                 </tr>
+             }
+         </table>
+     }
+<link href="~/Content/bootstrap-datepicker.min.css" rel="stylesheet" />
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+<script src="~/Scripts/jquery-3.1.1.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+<script src="~/Scripts/bootstrap-datepicker.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#From').datepicker({
+            format: "dd-MM-yyyy",
+            autoclose: true,
+            todayHighlight: true,
+            orientation: "bottom right"
+        });
+        $('#To').datepicker({
+            format: "dd-MM-yyyy",
+            autoclose: true,
+            todayHighlight: true,
+            orientation: "bottom right"
+        });
+    });
+</script>
+    <script>
+        $(document).ready(function () {
+            $("#Form").validate({
+
+                rules: {
+                    From: "required",
+                    To: "required"
+                }
+            });
+        })
+    </script>
+
+}

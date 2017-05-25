@@ -1,0 +1,364 @@
+﻿@using ATLConveyanceBill.Models
+
+@{
+    ViewBag.Title = "ApprovalBill";
+}
+<br />
+<br />
+<br />
+<br />
+
+@if (ViewBag.Message == "Approvald")
+{
+    <div style="align-content: center" id="MessageDiv" class="alert-success">@ViewBag.Message</div>
+}
+else
+{
+    <div style="align-content: center" id="MessageDiv" class="alert-danger">@ViewBag.Message</div>
+}
+<h2>Approve Bill</h2>
+<div>
+    <form method="POST" id="PayForm">
+        <table>
+
+            <tr></tr>
+            <tr>
+                <td><input type="checkbox" id="OfEmployee" name="Approve" value="true" /></td>
+                <td><label>Approval All Bill </label></td>
+                <td id="empTd">
+
+                    <label>Dated Between</label><label for="DateFrom"></label>
+                </td>
+                <td><input id="DateFrom" name="From" />
+                <td></td>
+                <td>&nbsp; &nbsp;</td>
+                <td colspan="2"></td>
+                <td><label for="DateTo">AND</label></td>
+                <td><input id="DateTo" name="To" /></td>
+                <td></td>
+                <td>
+                    <select id="EmployeeId" name="EmployeeId">
+                        <option>Select</option>
+                        @foreach (Employee employee in ViewBag.Employees)
+                        {
+                            <option value="@employee.Id">@employee.Name</option>
+                        }
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+            </tr>
+            <tr><td><input type="submit" value="Approval" /></td></tr>
+
+        </table>
+
+    </form>
+</div>
+<div>
+
+    <table id="myTable" class="table table-responsive table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>EmpId</th>
+                <th>Date</th>
+                <th>From</th>
+                <th>To</th>
+                <th>Project</th>
+                <th>Vehicle By</th>
+                <th>Amount</th>
+                <th>Remarks</th>
+                <th>Checked</th>
+                <th>Approvald</th>
+                <th>Paid</th>
+            </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+        <tfoot>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><label for="TotalAmount">Total</label></td>
+                @*<td id="TotalAmount"></td>*@
+                <td><input id="TotalAmount" readonly="readonly" disabled="disabled" /></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+
+            </tr>
+        </tfoot>
+    </table>
+
+</div>
+<div>
+    @Html.ActionLink("View PDF", "DownloadViewPDF", "Conveyance")
+</div>
+@section scripts{
+
+    <script src="~/Scripts/jquery-3.1.1.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/jquery-ui.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css" />
+    <script src="~/Scripts/DataTables/jquery.dataTables.js"></script>
+
+
+    <script>
+        $().ready(function() {
+            // $('#ApprovalForm').validate();
+            $(document).ready(function() {
+                $("#ApproveForm").validate({
+                    rules: {
+                        DateFrom: "required",
+                        DateTo2: "required"
+                    },
+                    messages: {
+                        DateFrom: "From Date is must",
+                        DateTo2: "To Date is must"
+                    }
+                });
+
+            });
+        });
+    </script>
+    <script>
+        $(function() {
+            $("#DateFrom").datepicker({ dateFormat: 'dd-M-yy' });
+            $("#DateTo").datepicker({ dateFormat: 'dd-M-yy' });
+            //$("#DateFrom2").datepicker({ dateFormat: 'dd-M-yy' });
+            //$("#DateTo2").datepicker({ dateFormat: 'dd-M-yy' });
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $.ajax({
+                @Url.Action("PayBill", "Conveyance")
+                //url: 'Conveyance/GetConveyanceByDate',
+                method: 'post',
+                dataType: 'json',
+                success: function(data) {
+                    $("#myTable").dataTable({
+                        data: data,
+                        columns: [
+                            { 'data': 'Name' },
+                            { 'data': 'EmpId' },
+                            { 'data': 'Date' },
+                            { 'data': 'From' },
+                            { 'data': 'To' },
+                            { 'data': 'Project' },
+                            { 'data': 'VehicleBy' },
+                            { 'data': 'Amount' },
+                            { 'data': 'Remarks' },
+                            { 'data': 'Checked' },
+                            { 'data': 'Approvald' },
+                            { 'data': 'Paid' }
+                        ],
+                        //edit
+                        "footerCallback": function(tfoot, data, start, end, display) {
+                            var api = this.api();
+                            $(api.column(7).footer()).html(
+                                api.column(7).data().reduce(function(a, b) {
+                                    return a + b;
+                                }, 0)
+                            );
+                        }
+
+
+                        //
+                    });
+                }
+            });
+        })
+    </script>
+
+
+    <script>
+        $(document).ready(function() {
+            $("#EmployeeId").change(function() {
+                $("#tableBody").empty();
+                var employeeId = $("#EmployeeId").val();
+                var dateFrom = $("#DateFrom").val();
+                var dateTo = $("#DateTo").val();
+                var json = {
+                    empId: employeeId,
+                    dateFrom: dateFrom,
+                    dateTo: dateTo
+                };
+                $.ajax({
+                    type: "POST",
+                    //url:' @*@Url.Action("GetBills", "Conveyance"),*@
+                    url: '/ATLConveyanceBill/Conveyance/GetBills',
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(json),
+                    success: function(data) {
+
+                        $("#myTable").show();
+                        $.each(data, function(key, value) {
+                            $("#TotalAmount").val(data.total);
+                        });
+                        $.each(data.bill, function(key, value) {
+                            var rawDate = value.Date;
+                            var epochDate = rawDate.substring(6, rawDate.length - 2);
+                            //alert(rawDate);
+                            // alert(epochDate);
+                            var myDate = new Date(epochDate * 1);
+                            //alert(value.Name);
+                            //$("#EmpName").val(value.Name);
+                            //$("#TotalAmount").val(value.Amount);
+                            //alert(myDate);
+                            var check;
+                            var approve;
+                            var pay;
+                            if (value.Checked) {
+                                check = "Y";
+                            } else {
+                                check = "N";
+                            }
+                            if (value.Approved) {
+                                approve = "Y";
+                            } else {
+                                approve = "N";
+                            }
+                            if (value.Paid) {
+                                pay = "Y";
+                            } else {
+                                pay = "N";
+                            }
+                            $("#tableBody").append('<tr><td>' + value.Id+'</td><td>' + value.Name + '</td><td>' + value.EmpId + '</td><td>' + myDate.toDateString() + '</td><td>' + value.From + '</td><td>' + value.To + '</td><td>' + value.Project + '</td><td>' + value.VehicleBy + '</td><td>' + value.Amount + '</td><td>' + value.Remarks + '</td><td>' + check + '</td><td>' + approve + '</td><td>' + pay + '</td></tr>');
+                        });
+                        $("#myTable").dataTable(); /*.fnDestroy();*/
+                    }
+                });
+            });
+            $("#DateFrom").change(function() {
+                $("#tableBody").empty();
+                var employeeId = $("#EmployeeId").val();
+                var dateFrom = $("#DateFrom").val();
+                var dateTo = $("#DateTo").val();
+                var json = {
+                    empId: employeeId,
+                    dateFrom: dateFrom,
+                    dateTo: dateTo
+                };
+                $.ajax({
+                    type: "POST",
+                    //url:' @*@Url.Action("GetBills", "Conveyance"),*@
+                    url: '/ATLConveyanceBill/Conveyance/GetBills',
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(json),
+                    success: function(data) {
+
+                        $("#myTable").show();
+                        $.each(data, function (key, value) {
+                            $("#TotalAmount").val(data.total);
+                        });
+                        $.each(data.bill, function(key, value) {
+                            var rawDate = value.Date;
+                            var epochDate = rawDate.substring(6, rawDate.length - 2);
+                            //alert(rawDate);
+                            // alert(epochDate);
+                            var myDate = new Date(epochDate * 1);
+                            //alert(value.Name);
+                            //$("#EmpName").val(value.Name);
+                            //$("#TotalAmount").val(value.Amount);
+                            //alert(myDate);
+                            var check;
+                            var approve;
+                            var pay;
+                            if (value.Checked) {
+                                check = "Y";
+                            } else {
+                                check = "N";
+                            }
+                            if (value.Approved) {
+                                approve = "Y";
+                            } else {
+                                approve = "N";
+                            }
+                            if (value.Paid) {
+                                pay = "Y";
+                            } else {
+                                pay = "N";
+                            }
+                            $("#tableBody").append('<tr><td>' + value.Name + '</td><td>' + value.EmpId + '</td><td>' + myDate.toDateString() + '</td><td>' + value.From + '</td><td>' + value.To + '</td><td>' + value.Project + '</td><td>' + value.VehicleBy + '</td><td>' + value.Amount + '</td><td>' + value.Remarks + '</td><td>' + check + '</td><td>' + approve + '</td><td>' + pay + '</td></tr>');
+                        });
+                        $("#myTable").dataTable(); /*.fnDestroy();*/
+                    }
+                });
+            });
+            $("#DateTo").change(function() {
+                $("#tableBody").empty();
+                var employeeId = $("#EmployeeId").val();
+                var dateFrom = $("#DateFrom").val();
+                var dateTo = $("#DateTo").val();
+                var json = {
+                    empId: employeeId,
+                    dateFrom: dateFrom,
+                    dateTo: dateTo
+                };
+                $.ajax({
+                    type: "POST",
+                    //url:' @*@Url.Action("GetBills", "Conveyance"),*@
+                    url: '/ATLConveyanceBill/Conveyance/GetBills',
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(json),
+                    success: function(data) {
+
+                        $("#myTable").show();
+                        $.each(data, function (key, value) {
+                            $("#TotalAmount").val(data.total);
+                        });
+                        $.each(data.bill, function(key, value) {
+                            var rawDate = value.Date;
+                            var epochDate = rawDate.substring(6, rawDate.length - 2);
+                            //alert(rawDate);
+                            // alert(epochDate);
+                            var myDate = new Date(epochDate * 1);
+                            //alert(value.Name);
+                            //$("#EmpName").val(value.Name);
+                            //$("#TotalAmount").val(value.Amount);
+                            //alert(myDate);
+                            var check;
+                            var approve;
+                            var pay;
+                            if (value.Checked) {
+                                check = "Y";
+                            } else {
+                                check = "N";
+                            }
+                            if (value.Approved) {
+                                approve = "Y";
+                            } else {
+                                approve = "N";
+                            }
+                            if (value.Paid) {
+                                pay = "Y";
+                            } else {
+                                pay = "N";
+                            }
+                            $("#tableBody").append('<tr><td>' + value.Name + '</td><td>' + value.EmpId + '</td><td>' + myDate.toDateString() + '</td><td>' + value.From + '</td><td>' + value.To + '</td><td>' + value.Project + '</td><td>' + value.VehicleBy + '</td><td>' + value.Amount + '</td><td>' + value.Remarks + '</td><td>' + check + '</td><td>' + approve + '</td><td>' + pay + '</td></tr>');
+                        });
+                        $("#myTable").dataTable(); /*.fnDestroy();*/
+                    }
+                });
+            });
+        });
+    </script>
+
+
+    <script>
+        $(document).ready(function() {
+            $("#MessageDiv").hide(4000);
+        })
+    </script>
+
+}
+
+

@@ -1,0 +1,122 @@
+﻿@model ATLConveyanceBill.Models.Authenticate
+@{
+    ViewBag.Title = "Report";
+}
+@{
+    int LoginStatus, EId, AdminId;
+    HttpContext info = System.Web.HttpContext.Current;
+
+    LoginStatus = Convert.ToInt32(info.Session["LoginStatus"]);
+    EId = Convert.ToInt32(info.Session["EId"]);
+    AdminId = Convert.ToInt32(info.Session["AdminId"]);
+}
+
+<h2>Report</h2>
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "ReportForm" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        <hr />
+        @Html.ValidationSummary(true)
+
+        <table>
+            @if (EId == AdminId)
+            {
+                <tr>
+                    <td colspan="2">@Html.Label("Employee", new {@class = "control-label"})</td>
+                    <td>@Html.DropDownListFor(model => model.EmployeeId, ViewBag.Employees as SelectList, "Select")</td>
+                    <td>@*@Html.ValidationMessageFor(model => model.EmployeeId)*@</td>
+                </tr>
+            }
+            <tr>
+                <td colspan="2">@Html.Label("Date From", new {@class = "control-label "})</td>
+                <td>@Html.EditorFor(model => model.From)</td>
+                <td>@Html.ValidationMessageFor(model => model.From)</td>
+            </tr>
+            <tr>
+                <td colspan="2">@Html.Label("Date To", new {@class = "control-label "})</td>
+                <td>@Html.EditorFor(model => model.To)</td>
+                <td>@Html.ValidationMessageFor(model => model.From)</td>
+            </tr>
+            <tr>
+                <td colspan="2">@Html.Label("Checked", new {@class = "control-label "})</td>
+                <td>@Html.RadioButton("Checked", 1)</td>
+                <td>@Html.Label("Unchecked", new {@class = "control-label"})</td>
+                <td>@Html.RadioButton("Checked", 2)</td>
+            </tr>
+            <tr>
+                <td colspan="2">@Html.Label("Approved", new {@class = "control-label"})</td>
+                <td>@Html.RadioButton("Approved", 1)</td>
+                <td>@Html.Label("Denied", new {@class = "control-label"})</td>
+                <td>@Html.RadioButton("Approved", 2)</td>
+            </tr>
+            <tr>
+                <td colspan="2">@Html.Label("Paid", new {@class = "control-label"})</td>
+                <td>@Html.RadioButton("Paid", 1)</td>
+                <td>@Html.Label("Due", new {@class = "control-label"})</td>
+                <td>@Html.RadioButton("Paid", 2)</td>
+            </tr>
+            <tr>
+                <td colspan="2"></td>
+                <td>@*<button class="btn btn-default" id="ExcelButton" name="Excel" value="1">Excel</button>*@</td>
+                <td></td>
+                <td><input type="submit" value="Report" class="btn btn-default"/></td>
+                <td><button id="Summery" value="1" name="Summery" class="button btn btn-default">Summary</button></td>
+            </tr>
+        </table>
+        <link href="~/Content/bootstrap-datepicker.min.css" rel="stylesheet" />
+        </div>
+}
+
+@section Scripts{
+@Scripts.Render("~/bundles/jqueryval") 
+<script src="~/Scripts/jquery-3.1.1.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/Scripts/bootstrap-datepicker.min.js"></script>
+   @* <script src="~/Scripts/jquery-ui.min.js"></script>*@
+
+    <script>
+        $(document).ready(function () {
+            $('#From').datepicker({
+                format: "dd-MM-yyyy",
+                autoclose: true,
+                todayHighlight: true,
+                orientation: "bottom right"
+            });
+            $('#To').datepicker({
+                format: "dd-MM-yyyy",
+                autoclose: true,
+                todayHighlight: true,
+                orientation: "bottom right"
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            
+            $("#ReportForm").validate({
+                rules:{
+                    From: {
+                        required:true
+                    },
+                    To: {
+                        required:true
+                    }
+                },
+                messages: {
+                    From: {
+                        required:"Select Starting Date"
+                    },
+                    To: {
+                        required:"Select Ending Date"
+                    }
+                }
+            });
+        })
+        
+    </script>
+}

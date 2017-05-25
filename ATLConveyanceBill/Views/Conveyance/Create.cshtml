@@ -1,0 +1,353 @@
+﻿@using ATLConveyanceBill.BLL
+@using ATLConveyanceBill.Controllers
+@using ATLConveyanceBill.Models
+@model ATLConveyanceBill.Models.Conveyance
+
+@{
+    ViewBag.Title = "Create";
+   // Employee employee = ViewBag.Employee;
+   // var EmpId = employee.EmpId;
+    WorkLog workLog = null;
+
+}
+<br/>
+<br/>
+<br/>
+<br />
+
+<h2 id="MessageHeader">@ViewBag.Message</h2>
+<div>
+    <table class="ui-icon-arrowthick-2-se-nw">
+        
+           @foreach (Employee employee in ViewBag.Employees)
+           {
+               <tr><td>@employee.Name</td></tr>
+               <tr><td>@employee.EmpId</td></tr> 
+           }
+       
+    </table>
+</div>
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "conveyanceForm" })) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        @*<h4>Conveyance</h4>*@
+        <hr />
+        @Html.ValidationSummary(true)
+
+
+        <fieldset class="form-group">
+            <legend>
+                Work Log
+            </legend>
+            <div class="form-group">
+                @Html.Label("Work Date", new {@class = "control-label col-md-2"})
+                <div class="col-md-10">
+
+                    @Html.Editor("WorkDate")
+                    @Html.ValidationMessage("WorkDate")
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Company Name", new {@class = "control-label col-md-2"})
+                <div class="col-md-10">
+
+                    @Html.DropDownList("ProjectId", ViewBag.Projects as SelectList, "Select")
+                    @Html.ValidationMessage("ProjectId")
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Work System", new {@class = "control-label col-md-2"})
+                <div class="col-md-10">
+
+                    @Html.DropDownList("WorkSystemId", ViewBag.WorkSystems as SelectList, "Select")
+                    @Html.ValidationMessage("WorkSystemId")
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Work Type", new {@class = "control-label col-md-2"})
+                <div class="col-md-10">
+                    @Html.DropDownList("WorkTypeId", ViewBag.WorkTypes as SelectList, "Select")
+                    @Html.ValidationMessage("WorkTypeId")
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Work Description", new {@class = "control-label col-md-2"})
+                <div class="col-md-10">
+
+                    @Html.TextArea("Description")
+                    @Html.ValidationMessage("Description")
+                </div>
+            </div>
+
+
+        </fieldset>
+        <fieldset>
+            <legend>Conveyance Bill</legend>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Date, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Date, new { @class = "ui-resizable" })
+                    @Html.ValidationMessageFor(model => model.Date)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.From, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.From)
+                    @Html.ValidationMessageFor(model => model.From)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.To, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.To)
+                    @Html.ValidationMessageFor(model => model.To)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.VehicleBy, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.VehicleBy)
+                    @Html.ValidationMessageFor(model => model.VehicleBy)
+                </div>
+            </div>
+
+            @*<div class="form-group">
+                @Html.LabelFor(model => model.ProjectId, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.ProjectId,ViewBag.Projects as SelectList,"Select")
+                    @Html.ValidationMessageFor(model => model.ProjectId)
+                </div>
+            </div>*@
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Amount, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Amount)
+                    @Html.ValidationMessageFor(model => model.Amount)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Remarks, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Remarks)
+                    @Html.ValidationMessageFor(model => model.Remarks)
+                </div>
+            </div>
+        </fieldset>
+        
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div id="indexLabel">
+    <table class="table">
+        <tr>
+
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.From)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.To)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VehicleBy)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProjectId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Amount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Remarks)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Checked)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Approved)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Paid)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (Conveyance item in ViewBag.Conveyances)
+        {
+            <tr>
+
+                <td>
+                    @item.Date.ToString("dd-MMM-yy")
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.From)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.To)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.VehicleBy)
+                </td>
+                @foreach (Project project in ViewBag.Project)
+                {
+                    if (project.Id == item.ProjectId)
+                    {
+                        <td>@project.Name</td>
+                    }
+                }
+                <td>
+                    @Html.DisplayFor(modelItem => item.Amount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Remarks)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Checked)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Approved)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Paid)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id}) |
+                    @*@Html.ActionLink("Details", "Details", new { id = item.Id }) |*@
+                    @*@Html.ActionLink("Delete", "Delete", new { id = item.Id })*@
+                </td>
+            </tr>
+        }
+
+    </table>
+    <link href="~/Content/bootstrap-datepicker.min.css" rel="stylesheet" />
+</div>
+
+<div>
+    @Html.ActionLink("Back to List", "Index",new{id=Session["EId"]})
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/jquery-3.1.1.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/bootstrap-datepicker.min.js"></script>
+
+
+    @*<script src="~/Scripts/jquery-ui.min.js"></script>*@
+    <script>
+        $(document).ready(function() {
+            $("#Date").prop({ 'disabled': true });
+            $('#WorkDate').datepicker({
+                format: "dd-MM-yyyy",
+                autoclose: true,
+                todayHighlight: true,
+                endDate: "Today",
+                maxViewMode: 1,
+                orientation: "bottom right"
+            });
+            //$('#DateTo').datepicker({
+            //    format: "dd-MM-yyyy",
+            //    autoclose: true,
+            //    todayHighlight: true
+            //});
+        })
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#conveyanceForm").validate({
+                rules: {
+                    WorkDate: "required",
+                    ProjectId: "required",
+                    WorkSystemId: "required",
+                    WorkTypeId: "required",
+                    Description: "required",
+                    Date: "required",
+                    From: "required",
+                    To: "required",
+                    VehicleBy: "required",
+                    Amount: "required"
+                }
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#conveyanceForm").validate({
+                rules: {
+                    Date: "required",
+                    From: "required",
+                    To: "required",
+                    VehicleBy: "required",
+                    ProjectId: "required",
+                    Amount: "required"
+
+                },
+                messages: {
+                    Date: "Travel Date",
+                    From: "Source of Travel",
+                    To: "Destination",
+                    VehicleBy: "Transport",
+                    ProjectId: "Select Project",
+                    Amount: "Amount"
+
+                }
+            });
+
+
+        })
+    </script>
+    <script>
+        $(document).ready(function() {
+            // $("#MessageHeader").hide(4000);
+            //$("#Date").val('');
+            $("#From").val('');
+            $("#To").val('');
+            $("#VehicleBy").val('');
+            $("#ProjectId").val('');
+            $("#Amount").val('');
+            $("#Remarks").val('');
+        })
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#Date").val($("#WorkDate").val());
+            $("#WorkDate").change(function() {
+                var date = $("#WorkDate").val();
+
+                $("#Date").val(date);
+                $("#Date").prop({
+                    'disabled': true
+                });
+            });
+            $("#ProjectId").change(function() {
+                var project = $("#ProjectId").val();
+                $("#ProjectId").val(project);
+            });
+        })
+    </script>
+
+
+}

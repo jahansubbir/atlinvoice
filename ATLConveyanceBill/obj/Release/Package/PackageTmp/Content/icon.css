@@ -1,0 +1,8 @@
+﻿a.image-icon
+{
+    background: url(E:\Subbir\ATLConveyanceBill\ATLConveyanceBill\Content\icon.css) no-repeat top left;
+     display: block;
+     width: 150px;
+     height: 150px;
+     text-indent: -9999px; /* hides the link text */
+}

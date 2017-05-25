@@ -1,0 +1,168 @@
+﻿@model IEnumerable<ATLConveyanceBill.Models.WorkLogViewModel>
+
+@{
+    ViewBag.Title = "ViewWorkLog";
+}
+
+<h2>Work Log</h2>
+
+@*<p>
+    @Html.ActionLink("Create New", "Create")
+</p>*@
+<form id="logViewForm" method="POST">
+    <table>
+        <tr><td><label>Date From</label></td> <td>@Html.Editor("DateFrom")</td></tr>
+        <tr><td><label>Date To</label></td><td>@Html.Editor("DateTo")</td></tr>
+        <tr><td><label>Of</label></td><td>@Html.DropDownList("EmployeeId",ViewBag.Employee as SelectList,"Select")</td></tr>
+    </table>
+</form>
+<table class="table" id="logTable">
+    <thead>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EmpId)
+        </th>
+        
+        <th>
+            @Html.DisplayNameFor(model => model.Project)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.WorkSystem)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.WorkType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody id="tableBody">
+    @*@foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmployeeId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmpId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Project)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WorkSystem)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WorkType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+
+        </tr>
+    }*@
+    </tbody>
+</table>
+<link href="~/Content/bootstrap-datepicker.min.css" rel="stylesheet" />
+@section scripts{
+    @*<script src="~/Scripts/jquery-3.1.1.min.js"></script>*@
+    <script src="~/Scripts/bootstrap-datepicker.min.js"></script>
+    <script src="~/Scripts/DataTables/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("#tableBody").hide();
+            $("#DateFrom").datepicker({
+                format: "dd-MM-yyyy",
+                autoclose: true,
+                todayHighlight: true,
+                endDate: "Today",
+                maxViewMode: 1,
+                orientation: "bottom right"
+            });
+            $("#DateTo").datepicker({
+                format: "dd-MM-yyyy",
+                autoclose: true,
+                todayHighlight: true,
+                endDate: "Today",
+                maxViewMode: 1,
+                orientation: "bottom right"
+            });
+        });
+    </script>
+    <script>
+        function ajaxCall(url) {
+            $("#tableBody").empty();
+            //var employeeId = $("#EmployeeId").val();
+            var dateFrom = $("#DateFrom").val();
+            var dateTo = $("#DateTo").val();
+            var empId = $("#EmployeeId").val();
+            var json = {
+                //empId: employeeId,
+                fromDate: dateFrom,
+                toDate: dateTo,
+                empId: empId
+            };
+            $.ajax({
+                type: "POST",
+                url: url@*'@Url.Action("ViewLog", "Conveyance")'*@,
+                //url: '/Conveyance/ViewLog',
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(json),
+                success: function(data) {
+                    // alert(data.Name);
+                    $("#tableBody").show();
+                    $.each(data, function (key, value) {
+                        var rawDate = value.Date;
+                        var epochDate = rawDate.substring(6, rawDate.length - 2);
+                        //alert(rawDate);
+                        // alert(epochDate);
+                        var myDate = new Date(epochDate * 1);
+                        $("#tableBody").append('<tr><td>' + myDate.toLocaleDateString() + '</td><td>' + value.Name + '</td><td>' + value.EmpId + '</td><td>' + value.Project + '</td><td>' + value.WorkSystem + '</td><td>' + value.WorkType + '</td><td>' + value.Description + '</td></tr>');
+                    });
+                    $("#logTable").dataTable();
+
+                }
+
+            });
+        }
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#DateFrom").change(function() {
+                ajaxCall('@Url.Action("ViewLog", "Conveyance")');
+            });
+            $("#DateTo").change(function() {
+                ajaxCall('@Url.Action("ViewLog", "Conveyance")');
+            });
+        })
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#DateFrom").change(function() {
+                ajaxCall('@Url.Action("ViewSpecificLog","Conveyance")');
+            });
+            $("#DateTo").change(function() {
+                ajaxCall('@Url.Action("ViewSpecificLog","Conveyance")');
+            });
+            $("#EmployeeId").change(function() {
+                ajaxCall('@Url.Action("ViewSpecificLog","Conveyance")');
+            });
+        });
+    </script>
+
+
+}

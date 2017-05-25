@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ATLConveyanceDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="ViewConveyanceBill">
+    <Key>
+      <PropertyRef Name="Name" />
+      <PropertyRef Name="EmpId" />
+      <PropertyRef Name="Date" />
+      <PropertyRef Name="Source" />
+      <PropertyRef Name="Destination" />
+      <PropertyRef Name="VehicleBy" />
+      <PropertyRef Name="Amount" />
+      <PropertyRef Name="Checked" />
+      <PropertyRef Name="Approved" />
+      <PropertyRef Name="Paid" />
+      <PropertyRef Name="EmployeeId" />
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="EmpId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Source" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Destination" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Project" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="VehicleBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Amount" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="Checked" Type="Boolean" Nullable="false" />
+    <Property Name="Approved" Type="Boolean" Nullable="false" />
+    <Property Name="Paid" Type="Boolean" Nullable="false" />
+    <Property Name="Remarks" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="EmployeeId" Type="Int32" Nullable="false" />
+    <Property Name="Id" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityContainer Name="ATLConveyanceDBEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="ViewConveyanceBills" EntityType="Self.ViewConveyanceBill" />
+  </EntityContainer>
+</Schema>

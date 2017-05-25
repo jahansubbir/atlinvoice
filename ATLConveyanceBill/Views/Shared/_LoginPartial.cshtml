@@ -1,0 +1,74 @@
+﻿@using ATLConveyanceBill.BLL
+@using ATLConveyanceBill.Controllers
+@using ATLConveyanceBill.Models
+@using Microsoft.AspNet.Identity
+@{
+    int loginStatus=0, eId=0, adminId=0;
+    HttpContext context = System.Web.HttpContext.Current;
+    HttpCookie cookie = context.Request.Cookies["loginCookie"];
+    EmployeeManager employeeManager=new EmployeeManager();
+    var notification = employeeManager.ShowNewUser();
+    if (cookie!=null)
+    {
+        loginStatus = Convert.ToInt32(cookie["LoginStatus"]);
+        eId = Convert.ToInt32(cookie["EId"]);
+        adminId = Convert.ToInt32(cookie["AdminId"]);
+    }
+    
+}
+
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Manage", "Account", routeValues: null, htmlAttributes: new { title = "Manage" })
+            </li>
+            <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+        </ul>
+    }
+}
+else
+{
+    if (loginStatus==0 && eId == 0 )
+    {
+        <ul class="nav navbar-nav navbar-right">
+            <li>@Html.ActionLink("Register", "Create", "Employee", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+            <li>@Html.ActionLink("Log in", "AttemptLogin", "Login", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+        </ul>
+    }
+    else
+    {
+        <ul class="nav navbar-nav navbar-right">
+            @if (eId == adminId)
+            {
+                <li><input type="button" value="@notification" onclick="location.href = '@Url.Action("ActivateUser", "Employee")'"  style="margin-top: 12px; border-radius: 50%" id="notificationButton"/>
+</li>
+            }
+            <li>@Html.ActionLink("Log Out", "Logout", "Login", routeValues: null, htmlAttributes: new {id = eId})</li>
+        </ul>
+    }
+
+}
+
+
+@section scripts{
+
+    @*<script src="~/Scripts/jquery-3.1.1.min.js"></script>
+    <script src="~/Scripts/jquery-ui.min.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>*@
+    <script>
+        $(document).ready(function() {
+            $("#notificationButton").click(function() {
+                $("#notificationButton").hide();
+            });
+        })
+    </script>
+
+
+
+}

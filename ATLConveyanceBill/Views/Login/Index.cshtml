@@ -1,0 +1,98 @@
+﻿@using ATLConveyanceBill.Controllers
+@using ATLConveyanceBill.Models
+@model IEnumerable<ATLConveyanceBill.Models.Employee>
+
+@{
+    ViewBag.Title = "Index";
+    Employee anEmployee = ViewBag.Employee;
+    int loginStatus = Convert.ToInt32(Session["LoginStatus"]);
+    int eId = Convert.ToInt32(Session["EId"]);
+    int adminId = Convert.ToInt32(Session["AdminId"]);
+}
+
+<br />
+<br />
+<br />
+<br />
+@*@if (LoginController.eId == LoginController.AdminId)
+{
+    <input type="button" value="@ViewBag.Notification" onclick="location.href = '@Url.Action("ActivateUser", "Employee")'" style="margin-top: 30px; right: 200px" />
+}*@
+<h2>Employee Profile</h2>
+
+
+<table class="table">
+    @*<tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Address)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ContactNo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EmpId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DesignationId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DepartmentId)
+        </th>
+
+        <th></th>
+    </tr>*@
+
+    <tr>
+        <td>
+
+    <tr><td><label>Name</label></td><td>@anEmployee.Name</td></tr>
+    <tr><td><label>Address</label></td><td>@anEmployee.Address</td></tr>
+    <tr><td><label>Contact No</label></td><td>@anEmployee.ContactNo</td></tr>
+    <tr><td><label>Email</label></td><td>@anEmployee.Email</td></tr>
+    <tr><td><label>Emp Id</label></td><td>@anEmployee.EmpId</td></tr>
+
+    <tr><td><label>Department</label></td>
+        @foreach (Department department in ViewBag.Departments)
+        {
+            if (department.Id == anEmployee.DepartmentId)
+            {
+                <td>@department.Name</td>
+            }
+        }
+    </tr>
+        <tr><td><label>Designation</label></td>
+            @foreach (Designation designation in ViewBag.Designations)
+                 {
+                     if (designation.Id == anEmployee.DesignationId)
+                     {
+                         <td> @designation.Name</td>
+                     }
+                 }
+        </tr>
+    <tr><td></td></tr>
+
+
+
+
+    </tr>
+
+    <td>
+        @Html.ActionLink("Request Bill |", "Create", new {controller = "Conveyance", id = anEmployee.Id}) |
+        @if (eId == 3)
+        {
+            @Html.ActionLink("View Employee |","Index", "Employee") 
+            @Html.ActionLink("View Bills", "ViewBill", "Conveyance")
+        }
+        @*@Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })*@
+    </td>
+
+
+
+</table>

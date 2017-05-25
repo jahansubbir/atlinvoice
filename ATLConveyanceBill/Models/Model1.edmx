@@ -1,0 +1,147 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ATLConveyanceDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'ATLConveyanceDB.dbo.ViewConveyanceBill' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="ViewConveyanceBill">
+          <Key>
+            <PropertyRef Name="Name" />
+            <PropertyRef Name="EmpId" />
+            <PropertyRef Name="Date" />
+            <PropertyRef Name="Source" />
+            <PropertyRef Name="Destination" />
+            <PropertyRef Name="VehicleBy" />
+            <PropertyRef Name="Amount" />
+            <PropertyRef Name="Checked" />
+            <PropertyRef Name="Approved" />
+            <PropertyRef Name="Paid" />
+            <PropertyRef Name="EmployeeId" />
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="EmpId" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Date" Type="date" Nullable="false" />
+          <Property Name="Source" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Destination" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Project" Type="varchar" MaxLength="50" />
+          <Property Name="VehicleBy" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Amount" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Checked" Type="bit" Nullable="false" />
+          <Property Name="Approved" Type="bit" Nullable="false" />
+          <Property Name="Paid" Type="bit" Nullable="false" />
+          <Property Name="Remarks" Type="varchar" MaxLength="50" />
+          <Property Name="EmployeeId" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="ATLConveyanceDBModelStoreContainer">
+          <EntitySet Name="ViewConveyanceBill" EntityType="Self.ViewConveyanceBill" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [ViewConveyanceBill].[Name] AS [Name], 
+    [ViewConveyanceBill].[EmpId] AS [EmpId], 
+    [ViewConveyanceBill].[Date] AS [Date], 
+    [ViewConveyanceBill].[Source] AS [Source], 
+    [ViewConveyanceBill].[Destination] AS [Destination], 
+    [ViewConveyanceBill].[Project] AS [Project], 
+    [ViewConveyanceBill].[VehicleBy] AS [VehicleBy], 
+    [ViewConveyanceBill].[Amount] AS [Amount], 
+    [ViewConveyanceBill].[Checked] AS [Checked], 
+    [ViewConveyanceBill].[Approved] AS [Approved], 
+    [ViewConveyanceBill].[Paid] AS [Paid], 
+    [ViewConveyanceBill].[Remarks] AS [Remarks], 
+    [ViewConveyanceBill].[EmployeeId] AS [EmployeeId], 
+    [ViewConveyanceBill].[Id] AS [Id]
+    FROM [dbo].[ViewConveyanceBill] AS [ViewConveyanceBill]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ATLConveyanceDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="ViewConveyanceBill">
+          <Key>
+            <PropertyRef Name="Name" />
+            <PropertyRef Name="EmpId" />
+            <PropertyRef Name="Date" />
+            <PropertyRef Name="Source" />
+            <PropertyRef Name="Destination" />
+            <PropertyRef Name="VehicleBy" />
+            <PropertyRef Name="Amount" />
+            <PropertyRef Name="Checked" />
+            <PropertyRef Name="Approved" />
+            <PropertyRef Name="Paid" />
+            <PropertyRef Name="EmployeeId" />
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="EmpId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Source" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Destination" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Project" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="VehicleBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Amount" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Checked" Type="Boolean" Nullable="false" />
+          <Property Name="Approved" Type="Boolean" Nullable="false" />
+          <Property Name="Paid" Type="Boolean" Nullable="false" />
+          <Property Name="Remarks" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EmployeeId" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="ATLConveyanceDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ViewConveyanceBills" EntityType="Self.ViewConveyanceBill" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ATLConveyanceDBModelStoreContainer" CdmEntityContainer="ATLConveyanceDBEntities">
+          <EntitySetMapping Name="ViewConveyanceBills">
+            <EntityTypeMapping TypeName="ATLConveyanceDBModel.ViewConveyanceBill">
+              <MappingFragment StoreEntitySet="ViewConveyanceBill">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="EmpId" ColumnName="EmpId" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Source" ColumnName="Source" />
+                <ScalarProperty Name="Destination" ColumnName="Destination" />
+                <ScalarProperty Name="Project" ColumnName="Project" />
+                <ScalarProperty Name="VehicleBy" ColumnName="VehicleBy" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Checked" ColumnName="Checked" />
+                <ScalarProperty Name="Approved" ColumnName="Approved" />
+                <ScalarProperty Name="Paid" ColumnName="Paid" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

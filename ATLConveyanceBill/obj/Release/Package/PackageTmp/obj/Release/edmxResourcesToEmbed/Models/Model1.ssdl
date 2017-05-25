@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ATLConveyanceDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'ATLConveyanceDB.dbo.ViewConveyanceBill' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="ViewConveyanceBill">
+    <Key>
+      <PropertyRef Name="Name" />
+      <PropertyRef Name="EmpId" />
+      <PropertyRef Name="Date" />
+      <PropertyRef Name="Source" />
+      <PropertyRef Name="Destination" />
+      <PropertyRef Name="VehicleBy" />
+      <PropertyRef Name="Amount" />
+      <PropertyRef Name="Checked" />
+      <PropertyRef Name="Approved" />
+      <PropertyRef Name="Paid" />
+      <PropertyRef Name="EmployeeId" />
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="EmpId" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Date" Type="date" Nullable="false" />
+    <Property Name="Source" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Destination" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Project" Type="varchar" MaxLength="50" />
+    <Property Name="VehicleBy" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Amount" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="Checked" Type="bit" Nullable="false" />
+    <Property Name="Approved" Type="bit" Nullable="false" />
+    <Property Name="Paid" Type="bit" Nullable="false" />
+    <Property Name="Remarks" Type="varchar" MaxLength="50" />
+    <Property Name="EmployeeId" Type="int" Nullable="false" />
+    <Property Name="Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityContainer Name="ATLConveyanceDBModelStoreContainer">
+    <EntitySet Name="ViewConveyanceBill" EntityType="Self.ViewConveyanceBill" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [ViewConveyanceBill].[Name] AS [Name], 
+    [ViewConveyanceBill].[EmpId] AS [EmpId], 
+    [ViewConveyanceBill].[Date] AS [Date], 
+    [ViewConveyanceBill].[Source] AS [Source], 
+    [ViewConveyanceBill].[Destination] AS [Destination], 
+    [ViewConveyanceBill].[Project] AS [Project], 
+    [ViewConveyanceBill].[VehicleBy] AS [VehicleBy], 
+    [ViewConveyanceBill].[Amount] AS [Amount], 
+    [ViewConveyanceBill].[Checked] AS [Checked], 
+    [ViewConveyanceBill].[Approved] AS [Approved], 
+    [ViewConveyanceBill].[Paid] AS [Paid], 
+    [ViewConveyanceBill].[Remarks] AS [Remarks], 
+    [ViewConveyanceBill].[EmployeeId] AS [EmployeeId], 
+    [ViewConveyanceBill].[Id] AS [Id]
+    FROM [dbo].[ViewConveyanceBill] AS [ViewConveyanceBill]</DefiningQuery>
+    </EntitySet>
+  </EntityContainer>
+</Schema>

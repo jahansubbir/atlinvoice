@@ -1,0 +1,150 @@
+﻿@using ATLConveyanceBill.Models
+
+@{
+    ViewBag.Title = "ApproveSelectedBills";
+}
+
+@if (ViewBag.Message == "Approved")
+{
+    <div style="align-content: center" id="MessageDiv" class="alert-success">@ViewBag.Message</div>
+}
+else
+{
+    <div style="align-content: center" id="MessageDiv" class="alert-danger">@ViewBag.Message</div>
+}
+<h2>Approve Bill</h2>
+<div>
+    <form method="POST" id="PayForm">
+        <table>
+
+            <tr></tr>
+            <tr>
+                <td><input type="checkbox" id="OfEmployee" name="Approve" value="true" /></td>
+                <td><label>Approve All Bill </label></td>
+                <td id="empTd">
+
+                    <label>Dated Between</label><label for="DateFrom"></label>
+                </td>
+                <td><input id="DateFrom" name="From" />
+                <td></td>
+                <td>&nbsp; &nbsp;</td>
+                <td colspan="2"></td>
+                <td><label for="DateTo">AND</label></td>
+                <td><input id="DateTo" name="To" /></td>
+                <td></td>
+                <td>
+                    <select id="EmployeeId" name="EmployeeId">
+                        <option>Select</option>
+                        @foreach (Employee employee in ViewBag.Employees)
+                        {
+                            <option value="@employee.Id">@employee.Name</option>
+                        }
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+            </tr>
+            <tr><td><input type="submit" value="Approve" /></td></tr>
+
+        </table>
+        <table id="myTable" class="table table-responsive table-bordered table-striped">
+            <thead>
+                <tr>
+
+                    <th></th>
+                    <th>Name</th>
+                    <th>EmpId</th>
+                    <th>Date</th>
+                    <th>From</th>
+                    <th>To</th>
+                    <th>Project</th>
+                    <th>Vehicle By</th>
+                    <th>Amount</th>
+                    <th>Remarks</th>
+                    <th>Checked</th>
+                    <th>Approved</th>
+                    <th>Paid</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody"></tbody>
+            <tfoot>
+                <tr>
+
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td><label for="TotalAmount">Total</label></td>
+                    @*<td id="TotalAmount"></td>*@
+                    <td><input id="TotalAmount" readonly="readonly" disabled="disabled" /></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+
+                </tr>
+            </tfoot>
+        </table>
+    </form>
+
+</div>
+<div>
+    <link href="~/Content/bootstrap-datepicker.min.css" rel="stylesheet" />
+    <input type="hidden" id="getBillByDateUrl" value="@Url.Action("BillByDate", "Conveyance")"/>
+    <input type="hidden" id="getBillUrl" value="@Url.Action("GetBills","Conveyance")"/>
+
+</div>
+@*<div>
+    @Html.ActionLink("View PDF", "DownloadViewPDF", "Conveyance")
+</div>*@
+@section scripts{
+
+    <script src="~/Scripts/jquery-3.1.1.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/bootstrap-datepicker.min.js"></script>
+
+    @*<script src="~/Scripts/jquery-ui.min.js"></script>*@
+    <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css" />
+    <script src="~/Scripts/DataTables/jquery.dataTables.js"></script>
+    <script src="~/Scripts/cascaded-dropdown.js"></script>
+<script src="~/Scripts/cascade.js"></script>
+  
+    <script>
+        $(document).ready(function () {
+            $('#DateFrom').datepicker({
+                format: "dd-MM-yyyy",
+                autoclose: true,
+                todayHighlight: true,
+                endDate: "Today",
+                maxViewMode: 1,
+                orientation: "bottom right"
+        });
+            $('#DateTo').datepicker({
+                format: "dd-MM-yyyy",
+                autoclose: true,
+                todayHighlight: true,
+                endDate: "Today",
+                maxViewMode: 1,
+                orientation: "bottom right"
+            });
+        });
+    </script>
+   
+<script src="~/Scripts/getbillbydate.js"></script>
+    
+
+
+    <script>
+        $(document).ready(function() {
+            //$("#MessageDiv").hide(4000);
+        })
+    </script>
+
+}
+
+

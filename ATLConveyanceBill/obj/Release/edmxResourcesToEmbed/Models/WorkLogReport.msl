@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ATLConveyanceDBModel1StoreContainer" CdmEntityContainer="Entities">
+    <EntitySetMapping Name="ViewWorkLogs">
+      <EntityTypeMapping TypeName="ATLConveyanceDBModel1.ViewWorkLog">
+        <MappingFragment StoreEntitySet="ViewWorkLog">
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="EmpId" ColumnName="EmpId" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="Project" ColumnName="Project" />
+          <ScalarProperty Name="WorkSystem" ColumnName="WorkSystem" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
